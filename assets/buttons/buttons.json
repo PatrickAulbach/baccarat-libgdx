@@ -1,0 +1,20 @@
+{
+  "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+    "font": {
+      "file": "font-export.fnt"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+    "card": {
+      "up": "buttonNormal"
+    }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+    "default": {
+      "font": "font",
+      "up": "buttonNormal",
+      "down": "buttonPressed",
+      "over": "buttonHighLight"
+    }
+  }
+}
