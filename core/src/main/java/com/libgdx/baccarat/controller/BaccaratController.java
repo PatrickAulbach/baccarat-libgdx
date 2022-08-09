@@ -2,13 +2,14 @@ package com.libgdx.baccarat.controller;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.libgdx.baccarat.BaccaratGame;
+import com.libgdx.baccarat.config.GameConfig;
 import com.libgdx.baccarat.entity.Card;
 import com.libgdx.baccarat.entity.Deck;
 import com.libgdx.baccarat.enums.Entity;
 import com.libgdx.baccarat.utils.BaccaratRules;
+
+import java.util.Random;
 
 public class BaccaratController {
 
@@ -20,7 +21,7 @@ public class BaccaratController {
 
     private final Deck deck;
 
-    private Stage stage;
+    private final Stage stage;
 
     public BaccaratController(Deck deck, Stage stage) {
         this.baccaratRules = new BaccaratRules();
@@ -45,12 +46,15 @@ public class BaccaratController {
 
         if (baccaratRules.checkEntityDraw(playerScore)) {
             int cardValue = drawCard(Entity.PLAYER);
+            addAdditionalCardToStage(Entity.PLAYER);
             if (baccaratRules.checkBankerDraw(bankerScore, cardValue)) {
                 drawCard(Entity.BANKER);
+                addAdditionalCardToStage(Entity.BANKER);
             }
         } else {
             if (baccaratRules.checkEntityDraw(bankerScore)) {
                 drawCard(Entity.BANKER);
+                addAdditionalCardToStage(Entity.BANKER);
             }
         }
 
@@ -66,21 +70,48 @@ public class BaccaratController {
 
         for (int i = 0; i < 2; i++) {
             Image image = deck.getPlayerHand().get(i).getImage();
-            image.setPosition(1400, 700);
+            image.setPosition(GameConfig.CARD_START_POSITION.x, GameConfig.CARD_START_POSITION.y);
             image.addAction(Actions.sequence(
                     Actions.hide(),
-                    Actions.delay((i * 2 + 1) / 2f),
+                    Actions.delay(GameConfig.PLAYER_HAND_DELAY_TIMES.get(i)),
                     Actions.show(),
-                    Actions.moveTo(700 + i * 100, 650, 1f)));
+                    Actions.rotateBy(new Random().nextInt(11)),
+                    Actions.moveTo(GameConfig.PLAYER_CARD_END_POSITION.x + i * 60, GameConfig.PLAYER_CARD_END_POSITION.y, 1f)));
             stage.addActor(image);
 
             image = deck.getBankerHand().get(i).getImage();
-            image.setPosition(1400, 700);
+            image.setPosition(GameConfig.CARD_START_POSITION.x, GameConfig.CARD_START_POSITION.y);
             image.addAction(Actions.sequence(
                     Actions.hide(),
-                    Actions.delay((i * 2 + 5) / 2f),
+                    Actions.delay(GameConfig.BANKER_HAND_DELAY_TIMES.get(i)),
                     Actions.show(),
-                    Actions.moveTo(700 + i * 100, 250, 1f)));
+                    Actions.rotateBy(new Random().nextInt(11)),
+                    Actions.moveTo(GameConfig.BANKER_CARD_END_POSITION.x + i * 60, GameConfig.BANKER_CARD_END_POSITION.y, 1f)));
+            stage.addActor(image);
+        }
+    }
+
+    private void addAdditionalCardToStage(Entity entity) {
+
+        if(Entity.PLAYER.equals(entity)) {
+            Image image = deck.getPlayerHand().get(2).getImage();
+            image.setPosition(GameConfig.CARD_START_POSITION.x, GameConfig.CARD_START_POSITION.y);
+            image.addAction(Actions.sequence(
+                    Actions.hide(),
+                    Actions.delay(GameConfig.PLAYER_HAND_DELAY_TIMES.get(2)),
+                    Actions.show(),
+                    Actions.rotateBy(new Random().nextInt(11)),
+                    Actions.moveTo(GameConfig.PLAYER_CARD_END_POSITION.x + 100, GameConfig.PLAYER_CARD_END_POSITION.y, 1f)));
+            stage.addActor(image);
+        } else if (Entity.BANKER.equals(entity)) {
+            Image image = deck.getBankerHand().get(2).getImage();
+            image.setPosition(GameConfig.CARD_START_POSITION.x, GameConfig.CARD_START_POSITION.y);
+            image.addAction(Actions.sequence(
+                    Actions.hide(),
+                    Actions.delay(GameConfig.BANKER_HAND_DELAY_TIMES.get(2)),
+                    Actions.show(),
+                    Actions.rotateBy(new Random().nextInt(11)),
+                    Actions.moveTo(GameConfig.BANKER_CARD_END_POSITION.x + 100, GameConfig.BANKER_CARD_END_POSITION.y, 1f)));
             stage.addActor(image);
         }
     }

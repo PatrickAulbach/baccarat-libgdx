@@ -33,15 +33,17 @@ public class Deck {
         List<String> suits = List.of("clubs", "diamonds", "hearts", "spades");
 
         deck = new ArrayList<>();
-
-        for (int i = 1; i < 14; i++) {
-            for (String suit : suits) {
-                String cardName = "card-" + suit + "-" + i;
-                TextureRegion textureRegion = atlas.findRegion(cardName);
-                deck.add(new Card(new Image(textureRegion), CardMapper.getValue(cardName)));
+        for (int j = 0; j < 5; j++) {
+            for (int i = 1; i < 14; i++) {
+                for (String suit : suits) {
+                    String cardName = "card-" + suit + "-" + i;
+                    TextureRegion textureRegion = atlas.findRegion(cardName);
+                    deck.add(new Card(new Image(textureRegion), CardMapper.getValue(cardName)));
+                }
             }
         }
 
+        Collections.shuffle(deck);
     }
 
     public Card getNextCard() {

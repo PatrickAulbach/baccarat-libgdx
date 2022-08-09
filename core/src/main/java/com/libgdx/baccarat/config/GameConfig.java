@@ -28,26 +28,19 @@ public class GameConfig {
 
     public static final float MAX_Y = WORLD_HEIGHT - Y_OFFSET;
 
-    public static final Vector2 playerHandStartPosition = new Vector2(700, 700);
-    public static final Vector2 bankerHandStartPosition = new Vector2(700, 700);
+    public static final Vector2 CARD_START_POSITION = new Vector2(1400, 700);
+    public static final Vector2 PLAYER_CARD_END_POSITION = new Vector2(500, 650);
+    public static final Vector2 BANKER_CARD_END_POSITION = new Vector2(800, 650);
 
-    public static final List<Vector2> playerHandEndPosition = List.of(
-            new Vector2(20, 20),
-            new Vector2(20, 20),
-            new Vector2(20, 20));
-    public static final List<Vector2> bankerHandEndPosition = List.of(
-            new Vector2(50, 50),
-            new Vector2(20, 20),
-            new Vector2(20, 20));
-    public static final List<Float> playerHandDelayTimes = List.of(
+    public static final List<Float> PLAYER_HAND_DELAY_TIMES = List.of(
             0.5f,
             1.5f,
-            2.5f
+            4.5f
     );
-    public static final List<Float> bankerHandDelayTimes = List.of(
+    public static final List<Float> BANKER_HAND_DELAY_TIMES = List.of(
             2.5f,
             3.5f,
-            4.5f
+            5.5f
     );
 
     private GameConfig() {
